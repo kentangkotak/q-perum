@@ -1,5 +1,5 @@
 {
-  "authHost": "http://192.168.33.101",
+  "authHost": "https://192.168.33.101",
 
   "clients": [],
   "database": "redis",

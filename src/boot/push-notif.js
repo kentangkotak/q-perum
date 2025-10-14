@@ -14,7 +14,7 @@ export default boot(async () => {
       })
 
       // Kirim subscription ke backend Laravel
-      await fetch('http://192.168.33.101:8888/api/save-subscription', {
+      await fetch('https://192.168.33.101:8888/api/save-subscription', {
         method: 'POST',
         body: JSON.stringify(subscription),
         headers: { 'Content-Type': 'application/json' },
