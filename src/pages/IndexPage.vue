@@ -6,15 +6,13 @@
 
 <script setup>
 const mintaNotif = async () => {
-  if ('Notification' in window) {
-    const permission = await Notification.requestPermission()
-
-    if (permission === 'granted') {
-      new Notification('Notifikasi aktif 🎉', {
-        body: 'Sekarang kamu bisa terima notifikasi',
-        icon: '/icons/pwa-192x192.png',
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then((reg) => {
+      reg.showNotification('Notifikasi baru', {
+        body: 'Ada data masuk',
+        icon: '/icons/icon-192x192.png',
       })
-    }
+    })
   }
 }
 </script>

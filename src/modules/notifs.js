@@ -19,10 +19,12 @@ export function notifError(msg) {
 }
 
 export function notif(msg) {
-  if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification('Notif Realtime 🚀', {
-      body: msg,
-      icon: '/icons/pwa-192x192.png',
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then((reg) => {
+      reg.showNotification('Notifikasi baru', {
+        body: 'Ada data masuk',
+        icon: '/icons/icon-192x192.png',
+      })
     })
   }
 }
