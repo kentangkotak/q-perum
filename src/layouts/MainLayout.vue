@@ -1,20 +1,65 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh LpR fFf">
+    <q-header elevated class="bg-dark text-white">
       <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+          </q-avatar>
+          Perum Bengawan Indah
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
+    <q-drawer v-model="leftDrawerOpen" side="left" overlay elevated>
+      <div class="q-pa-sm q-mb-xs flex items-center bg-grey-9 text-white rounded-lg shadow-sm">
+        <q-icon name="menu" size="sm" class="q-mr-sm text-white" />
+        <div class="text-subtitle2 text-weight-bold">Menu</div>
+      </div>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+      <q-separator color="white" inset />
 
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
+      <q-list padding>
+        <template v-for="(item, index) in menuItems" :key="index">
+          <!-- jika punya children -->
+          <q-expansion-item
+            v-if="item.children && item.children.length"
+            :icon="item.icon"
+            :label="item.label"
+            expand-separator
+          >
+            <q-item
+              v-for="(child, idx) in item.children"
+              :key="idx"
+              clickable
+              v-ripple
+              :to="child.to"
+              active-class=" bg-blue-grey text-white"
+              exact
+              class="q-ml-md"
+            >
+              <q-item-section avatar>
+                <q-icon :name="child.icon" />
+              </q-item-section>
+              <q-item-section>{{ child.label }}</q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <!-- jika tidak punya children -->
+          <q-item
+            v-else
+            clickable
+            v-ripple
+            :to="item.to"
+            active-class="bg-blue-grey text-white"
+            exact
+          >
+            <q-item-section avatar>
+              <q-icon :name="item.icon" />
+            </q-item-section>
+            <q-item-section>{{ item.label }}</q-item-section>
+          </q-item>
+        </template>
       </q-list>
     </q-drawer>
 
@@ -25,57 +70,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
-  },
-]
+import { ref, onMounted } from 'vue'
 
 const leftDrawerOpen = ref(false)
+const menuItems = ref([])
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+// Ambil data dari localStorage saat layout dimuat
+onMounted(() => {
+  const storedMenu = localStorage.getItem('menus')
+  if (storedMenu) {
+    try {
+      menuItems.value = JSON.parse(storedMenu)
+      console.log('menuItems', menuItems.value)
+    } catch (e) {
+      console.error('Gagal parse menu dari localStorage', e)
+    }
+  }
+})
 </script>
