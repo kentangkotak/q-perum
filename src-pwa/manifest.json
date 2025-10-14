@@ -1,4 +1,9 @@
 {
+  "name": "Perum App",
+  "short_name": "Perum",
+  "description": "A Quasar Project",
+  "start_url": "/",
+  "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#027be3",
