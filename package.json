@@ -19,6 +19,7 @@
     "axios": "^1.12.2",
     "dotenv": "^17.2.3",
     "echarts": "^6.0.0",
+    "html2pdf.js": "^0.12.1",
     "laravel-echo": "^2.2.0",
     "pinia": "^3.0.1",
     "pusher-js": "^7.6.0",

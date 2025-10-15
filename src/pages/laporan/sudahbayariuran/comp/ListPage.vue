@@ -1,54 +1,58 @@
 <template>
   <q-card class="q-mt-sm">
-    <!-- Spinner saat loading -->
-    <div v-if="store.loading" class="q-pa-md flex flex-center">
-      <q-spinner-dots color="primary" size="3em" />
-    </div>
+    <q-card-section>
+      <!-- Spinner saat loading -->
+      <div v-if="store.loading" class="q-pa-md flex flex-center">
+        <q-spinner-dots color="primary" size="3em" />
+      </div>
 
-    <!-- List data -->
-    <div v-else>
-      <transition-group name="list" tag="div">
-        <q-list
-          v-for="(item, index) in store.items"
-          :key="item.notrans || index"
-          class="full-width"
-        >
-          <q-item clickable v-ripple class="q-mb-xxs">
-            <q-item-section avatar> {{ index + 1 }}. </q-item-section>
+      <!-- List data -->
+      <div v-else id="laporan-pdf">
+        <transition-group name="list" tag="div">
+          <q-list v-for="(item, index) in store.items" :key="item.notrans || index" class="q-mb-sm">
+            <q-item clickable v-ripple class="bg-grey-1 q-pa-sm rounded-borders">
+              <q-item-section avatar>
+                <q-avatar color="primary" text-color="white" size="28px">
+                  {{ index + 1 }}
+                </q-avatar>
+              </q-item-section>
 
-            <q-item-section top class="text-left" style="font-size: x-small">
-              <q-item-label class="q-mt-sm text-weight-bold" lines="1">
-                Notrans :
-                <span class="text-primary"> {{ item.notrans }} </span>
-              </q-item-label>
+              <q-item-section top class="text-left text-caption">
+                <div class="column q-gutter-xs">
+                  <div>
+                    <strong>Notrans:</strong> <span class="text-primary">{{ item.notrans }}</span>
+                  </div>
+                  <div>
+                    <strong>Nama:</strong>
+                    <q-badge color="teal" outline class="wrap-text">
+                      {{ item.nama }}
+                    </q-badge>
+                  </div>
+                  <div>
+                    <strong>Bulan Bayar:</strong> {{ getNamaBulan(item.bulan) }} {{ item.tahun }}
+                  </div>
+                  <div>
+                    <strong>Nominal:</strong>
+                    <span class="text-red text-weight-bold"
+                      >Rp. {{ formatDouble(item.nominal) }}</span
+                    >
+                  </div>
+                  <div><strong>Cara Bayar:</strong> {{ item.cara_bayar }}</div>
+                  <div>
+                    <strong>Keterangan:</strong>
+                    <span class="wrap-text">{{ item.keterangan }}</span>
+                  </div>
 
-              <!-- Detail lainnya (aktifkan bila perlu) -->
+                  <div><strong>Tanggal Bayar:</strong> {{ formatTanggal(item.created_at) }}</div>
+                </div>
+              </q-item-section>
+            </q-item>
 
-              <q-item-label lines="1">
-                Nama :
-                <q-badge color="teal" outline>{{ item.nama }}</q-badge>
-              </q-item-label>
-              <q-item-label lines="1">
-                Bulan Bayar : {{ getNamaBulan(item.bulan) }} {{ item.tahun }}
-              </q-item-label>
-              <q-item-label lines="1">
-                Nominal :
-                <span class="text-red text-weight-bold">
-                  Rp. {{ formatDouble(item.nominal) }}
-                </span>
-              </q-item-label>
-              <q-item-label lines="1"> Cara Bayar : {{ item.cara_bayar }} </q-item-label>
-              <q-item-label lines="1"> Keterangan : {{ item.keterangan }} </q-item-label>
-              <q-item-label lines="1">
-                Di Bayar Pada Tanggal : {{ formatTanggal(item.created_at) }}
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-separator class="q-mt-xs full-width" />
-        </q-list>
-      </transition-group>
-    </div>
+            <q-separator class="q-mt-xs full-width" />
+          </q-list>
+        </transition-group>
+      </div>
+    </q-card-section>
   </q-card>
 </template>
 
@@ -71,3 +75,22 @@ function formatTanggal(tanggal) {
   })
 }
 </script>
+
+<style scoped>
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s ease;
+}
+.list-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.wrap-text {
+  word-break: break-word;
+  white-space: normal;
+}
+</style>

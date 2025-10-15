@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section>
-      <div class="text-h6 text-weight-bold text-center">Laporan Yang Sudah Bayar Iuran</div>
+      <div class="text-h6 text-weight-bold text-center">Laporan Pembayaran Kas</div>
       <q-separator />
       <div class="row q-gutter-xs q-mt-sm">
         <div class="col-7">
@@ -57,8 +57,7 @@ const tahunOptions = [store.params.tahun - 1, store.params.tahun, store.params.t
 onMounted(() => {
   const stringdulu = store.params.bulan.toString()
   const sasa = props.bulan?.find((v) => v.kode === stringdulu)
-  console.log('sasa', sasa)
   store.params.bulan = sasa.kode
-  console.log('sasa', sasa, store.params.bulan)
+  store.setParams()
 })
 </script>
