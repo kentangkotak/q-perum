@@ -70,7 +70,9 @@
 </template>
 
 <script setup>
+import { useAutoLogout } from 'src/boot/autologout'
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 const leftDrawerOpen = ref(false)
 const menuItems = ref([])
@@ -79,13 +81,16 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
+const router = useRouter()
+useAutoLogout(router)
+
 // Ambil data dari localStorage saat layout dimuat
 onMounted(() => {
   const storedMenu = localStorage.getItem('menus')
   if (storedMenu) {
     try {
       menuItems.value = JSON.parse(storedMenu)
-      console.log('menuItems', menuItems.value)
+      // console.log('menuItems', menuItems.value)
     } catch (e) {
       console.error('Gagal parse menu dari localStorage', e)
     }

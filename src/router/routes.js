@@ -50,6 +50,10 @@ const routes = [
           // },
         ],
       },
+      {
+        path: 'logout',
+        component: () => import('src/pages/LogoutPage.vue'),
+      },
     ],
   },
 

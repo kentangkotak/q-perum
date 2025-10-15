@@ -15,7 +15,7 @@ export const useNominalIuranStore = defineStore('nominalIuran', {
           .get('/master/nominaliuran/get-iuran')
           .then((response) => {
             this.items = response.data
-            console.log(this.items)
+            // console.log(this.items)
             this.loading = false
             resolve(response.data)
           })
