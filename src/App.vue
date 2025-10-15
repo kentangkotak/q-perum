@@ -11,7 +11,7 @@ const router = useRouter()
 const $q = useQuasar()
 
 let timeout = null
-const TIMEOUT_MINUTES = 1
+const TIMEOUT_MINUTES = 15
 const TIMEOUT_MS = TIMEOUT_MINUTES * 60 * 1000
 
 function resetTimer() {
