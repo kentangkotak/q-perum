@@ -35,6 +35,21 @@ const routes = [
           // },
         ],
       },
+      {
+        path: 'laporan',
+        children: [
+          {
+            path: 'laporansudahbayariuran',
+            component: () => import('pages/laporan/sudahbayariuran/IndexPage.vue'),
+            meta: { requiresAuth: true },
+          },
+          // {
+          //   path: 'kas',
+          //   component: () => import('pages/master/kas/IndexPage.vue'),
+          //   meta: { requiresAuth: true },
+          // },
+        ],
+      },
     ],
   },
 

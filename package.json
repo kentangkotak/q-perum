@@ -17,6 +17,7 @@
   "dependencies": {
     "@quasar/extras": "^1.17.0",
     "axios": "^1.12.2",
+    "dotenv": "^17.2.3",
     "echarts": "^6.0.0",
     "laravel-echo": "^2.2.0",
     "pinia": "^3.0.1",

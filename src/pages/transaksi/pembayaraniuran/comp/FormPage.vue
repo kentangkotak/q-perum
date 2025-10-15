@@ -41,7 +41,7 @@
                 label="Pembayaran Bulan"
                 :options="bulan"
                 option-label="nama"
-                option-value="id"
+                option-value="kode"
                 emit-value
                 map-options
                 :rules="[(val) => !!val || 'Nama wajib diisi']"
@@ -202,5 +202,8 @@ function onSubmit() {
 
 onMounted(() => {
   store.initReset()
+  const stringdulu = store.form.bulan.toString()
+  const sasa = props.bulan?.find((v) => v.kode === stringdulu)
+  store.form.bulan = sasa.kode
 })
 </script>

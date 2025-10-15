@@ -2,6 +2,17 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers'
+import { config } from 'dotenv'
+
+// >>>> TARUH DI SINI, sebelum export
+if (process.env.NODE_ENV === 'development') {
+  config({ path: '.env.development' }) // <-- untuk quasar dev
+  console.log('🟢 Menggunakan .env.local')
+} else {
+  config({ path: '.env' }) // <-- untuk quasar build
+  console.log('🚀 Menggunakan .env.production')
+}
+// <<<< JANGAN DI DALAM RETURN
 
 export default defineConfig((/* ctx */) => {
   return {
@@ -11,7 +22,7 @@ export default defineConfig((/* ctx */) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['axios', 'notification'],
+    boot: ['axios'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
